@@ -14,17 +14,17 @@ p1  p2   p3   p4
 Patient: Mary Ann Kim
 select distinct MemberFirstName, MemberLastName from Patients
 where 
-((SOUNDEX(MemberFirstName) = SOUNDEX(@p1) and SOUNDEX(MemberLastName) = SOUNDEX(p2)) or 
- (SOUNDE(MemberFirstName) = SOUNDEX(@p2) and SOUNDEX(MemberLastName) = SOUNDEX(p1)))
+((SoundexFirstName = SOUNDEX(@p1) and SoundexLastName = SOUNDEX(p2)) or 
+ (SOUNDE(MemberFirstName) = SOUNDEX(@p2) and SoundexLastName = SOUNDEX(p1)))
 or 
-((SOUNDEX(MemberFirstName) = SOUNDEX(@p1) and SOUNDEX(MemberLastName) = SOUNDEX(p3)) or 
- (SOUNDEX(MemberFirstName) = SOUNDEX(@p3) and SOUNDEX(MemberLastName) = SOUNDEX(p1)))
+((SoundexFirstName = SOUNDEX(@p1) and SoundexLastName = SOUNDEX(p3)) or 
+ (SoundexFirstName = SOUNDEX(@p3) and SoundexLastName = SOUNDEX(p1)))
 or 
-((SOUNDEX(MemberFirstName) = SOUNDEX(@p1) and SOUNDEX(MemberLastName) = SOUNDEX(p2+p3)) or
- (SOUNDEX(MemberFirstName) = SOUNDEX(p2+p3) and SOUNDEX(MemberLastName) = SOUNDEX(p1)))
+((SoundexFirstName = SOUNDEX(@p1) and SoundexLastName = SOUNDEX(p2+p3)) or
+ (SoundexFirstName = SOUNDEX(p2+p3) and SoundexLastName = SOUNDEX(p1)))
 or 
-((SOUNDEX(MemberFirstName) = SOUNDEX(@p1+p2) and SOUNDEX(MemberLastName) = SOUNDEX(p3)) or 
- (SOUNDEX(MemberFirstName) = SOUNDEX(p3) and SOUNDEX(MemberLastName) = SOUNDEX(p1+p2)))
+((SoundexFirstName = SOUNDEX(@p1+p2) and SoundexLastName = SOUNDEX(p3)) or 
+ (SoundexFirstName = SOUNDEX(p3) and SoundexLastName = SOUNDEX(p1+p2)))
 
     
 string BuildWhereForPatientsSql(List<string> patients)
@@ -103,20 +103,20 @@ namespace WhereClause
             string result = "";
             if (list.Count == 1)
             {
-                result = string.Format("     (Soundex(MemberFirstName) = Soundex('{0}') or Soundex(MemberLastName) = Soundex('{0}'))\n", list[0].firstName, list[0].lastName);
+                result = string.Format("     (SoundexFirstName = Soundex('{0}') or SoundexLastName = Soundex('{0}'))\n", list[0].firstName, list[0].lastName);
                 return result;
             }
             for (int i = 0; i < list.Count; i++)
             {
                 if (i == 0)
                 {
-                    result = string.Format("     (Soundex(MemberFirstName) = Soundex('{0}') and Soundex(MemberLastName) = Soundex('{1}'))\n", list[i].firstName, list[i].lastName);
+                    result = string.Format("     (SoundexFirstName = Soundex('{0}') and SoundexLastName = Soundex('{1}'))\n", list[i].firstName, list[i].lastName);
                 }
                 else
                 {
                     result = result + " OR ";
                     result = result +
-                        string.Format(" (Soundex(MemberFirstName) = Soundex('{0}') and Soundex(MemberLastName) = Soundex('{1}'))\n", list[i].firstName, list[i].lastName);
+                        string.Format(" (SoundexFirstName = Soundex('{0}') and SoundexLastName = Soundex('{1}'))\n", list[i].firstName, list[i].lastName);
                 }
             }
             return result;

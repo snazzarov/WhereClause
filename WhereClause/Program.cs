@@ -8,7 +8,8 @@ namespace WhereClause
 {
     class Program
     {
-        static List<string> listParams = new List<string>() { "Mary", "Ann", "Kim" , "Julia" };
+        //static List<string> listParams = new List<string>() { "Mary", "Ann", "WALLIN", "Julia" };
+        static List<string> listParams = new List<string>() { "Mary", "Ann", "WALLIN" };
         static void Main(string[] args)
         {
             string sqlWhere = Names.BuildWhereForPatientsSql(listParams);
